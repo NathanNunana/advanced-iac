@@ -25,18 +25,18 @@ variable "sg_ingress" {
   description = "value"
   default = [
     {
-      description = ""
+      description = "Allow HTTPS"
       from_port   = 433
       to_port     = 433
       protocol    = "tcp"
-      cidr_blocks = []
+      cidr_blocks = ["0.0.0.0/0"]
     },
     {
-      description = ""
+      description = "Allow HTTP"
       from_port   = 80
       to_port     = 80
       protocol    = "tcp"
-      cidr_blocks = []
+      cidr_blocks = ["0.0.0.0/0"]
     }
   ]
 }
@@ -52,18 +52,11 @@ variable "sg_egress" {
   description = "value"
   default = [
     {
-      description = ""
-      from_port   = 433
-      to_port     = 433
+      description = "Allow all outbound traffic"
+      from_port   = 0
+      to_port     = 0
       protocol    = "-1"
-      cidr_blocks = []
-    },
-    {
-      description = ""
-      from_port   = 80
-      to_port     = 80
-      protocol    = "-1"
-      cidr_blocks = []
+      cidr_blocks = ["0.0.0.0/0"]
     }
   ]
 }
