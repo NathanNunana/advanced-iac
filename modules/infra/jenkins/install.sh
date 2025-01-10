@@ -6,6 +6,7 @@ exec > >(tee /var/log/user-data.log | logger -t user-data) 2>&1
 
 # Install aws cli
 curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+apt-get install unzip
 unzip awscliv2.zip
 sudo ./aws/install
 
@@ -39,3 +40,16 @@ else
     echo "Jenkins failed to start. Check logs for details."
     exit 1
 fi
+
+sleep 60
+
+# Download CLI
+wget -O http://localhost:8080/jnlpJars/jenkins-cli.jar
+
+# Reset password
+java -jar jenkins-cli.jar -s http://localhost:8080 groovy = <<EOF
+import jenkins.model.*
+def instance = Jenkins.getInstance()
+def adminUser = instance.getSecurityRealm().createAccount('admin', 'NewPassword123')
+adminUser.save()
+EOF
