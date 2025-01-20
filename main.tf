@@ -1,29 +1,29 @@
-module "vpc" {
-  source = "./modules/network/vpc"
-}
+# module "vpc" {
+#   source = "./modules/network/vpc"
+# }
 
-module "vpc_sg" {
-  source     = "./modules/network/sg"
-  vpc_id     = module.vpc.vpc_id
-  sg_name    = "vpc_sg"
-  sg_ingress = var.vpc_sg_ingress
-}
+# module "vpc_sg" {
+#   source     = "./modules/network/sg"
+#   vpc_id     = module.vpc.vpc_id
+#   sg_name    = "vpc_sg"
+#   sg_ingress = var.vpc_sg_ingress
+# }
 
-module "jenkins_sg" {
-  source     = "./modules/network/sg"
-  vpc_id     = module.vpc.vpc_id
-  sg_name    = "jenkins_sg"
-  sg_ingress = var.jenkins_sg_ingress
-}
+# module "jenkins_sg" {
+#   source     = "./modules/network/sg"
+#   vpc_id     = module.vpc.vpc_id
+#   sg_name    = "jenkins_sg"
+#   sg_ingress = var.jenkins_sg_ingress
+# }
 
-module "jenkins" {
-  source        = "./modules/infra/jenkins"
-  ami           = var.ami
-  instance_type = var.instance_type
-  public_subnet = module.vpc.subnet["public"].id
-  vpc_sg_id     = [module.vpc_sg.sg_id]
-  sg            = [module.jenkins_sg.sg_id]
-}
+# module "jenkins" {
+#   source        = "./modules/infra/jenkins"
+#   ami           = var.ami
+#   instance_type = var.instance_type
+#   public_subnet = module.vpc.subnet["public"].id
+#   vpc_sg_id     = [module.vpc_sg.sg_id]
+#   sg            = [module.jenkins_sg.sg_id]
+# }
 
 # module "eks" {
 #   source  = "terraform-aws-modules/eks/aws"
@@ -53,3 +53,16 @@ module "jenkins" {
 #     Terraform   = "true"
 #   }
 # }
+
+
+module "icon" {
+  source        = "./modules/infra/ec2"
+  instance-type = var.proj-subnet
+  subnet        = var.proj-subnet
+  vpc-sg-id     = var.proj-vpc-sg-id
+  tags = {
+    Environment = "dev"
+    Terraform   = "true"
+    Name        = "icon"
+  }
+}

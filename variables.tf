@@ -37,3 +37,20 @@ variable "jenkins_sg_ingress" {
   }))
   description = "value"
 }
+
+
+# ICON variables
+variable "proj-instance-type" {
+  type        = string
+  description = "value"
+}
+
+variable "proj-subnet" {
+  type        = string
+  description = "value"
+}
+
+variable "proj-vpc-sg-id" {
+  type        = list(string)
+  description = "value"
+}
